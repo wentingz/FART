@@ -6,7 +6,23 @@ struct ResultsView: View {
     private var score: String {
         scoreFormatter.string(from: NSNumber(integerLiteral: controller.questionnaire.score))!
     }
-    
+
+    private var pilotScore: String {
+        scoreFormatter.string(from: NSNumber(integerLiteral: controller.questionnaire.pilotScore))!
+    }
+
+    private var airportScore: String {
+        scoreFormatter.string(from: NSNumber(integerLiteral: controller.questionnaire.airportScore))!
+    }
+
+    private var environmentScore: String {
+        scoreFormatter.string(from: NSNumber(integerLiteral: controller.questionnaire.environmentScore))!
+    }
+
+    private var externalScore: String {
+        scoreFormatter.string(from: NSNumber(integerLiteral: controller.questionnaire.externalFactorScore))!
+    }
+
     private var normalizedScore: Float {
         Float(controller.questionnaire.score)/64.0
     }
@@ -58,16 +74,55 @@ struct ResultsView: View {
                 .font(.title)
         }
     }
+
+    private var pilotRisk: some View {
+        VStack {
+            Text("Pilot risk is " + pilotScore)
+                .font(.system(size: 20))
+                .bold()
+                .foregroundColor(riskColor)
+        }
+    }
+
+    private var airportRisk: some View {
+        VStack {
+            Text("Airport risk is " + airportScore)
+                .font(.system(size: 20))
+                .bold()
+                .foregroundColor(riskColor)
+        }
+    }
     
+    private var environmentRisk: some View {
+        VStack {
+            Text("Airport risk is " + environmentScore)
+                .font(.system(size: 20))
+                .bold()
+                .foregroundColor(riskColor)
+        }
+    }
+    
+    private var externalRisk: some View {
+        VStack {
+            Text("External risk is " + externalScore)
+                .font(.system(size: 20))
+                .bold()
+                .foregroundColor(riskColor)
+        }
+    }
+
     var body: some View {
         VStack {
             VStack(alignment: .center) {
                 gauge
-                
-                Spacer().layoutPriority(0).frame(maxHeight: 100)
+                Spacer().layoutPriority(0).frame(maxHeight: 60)
                 riskTitle
-                Spacer().layoutPriority(0).frame(maxHeight: 100)
+                Spacer().layoutPriority(0).frame(maxHeight: 10)
             }.foregroundColor(riskColor)
+            pilotRisk
+            airportRisk
+            environmentRisk
+            externalRisk
             Text(riskDescription).font(.caption)
         }.padding()
     }
